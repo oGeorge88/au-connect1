@@ -1,0 +1,50 @@
+/* Import Bootstrap first */
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+/* Tailwind base, components, and utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Light and Dark Mode Root Colors */
+:root {
+  --foreground-rgb: 0, 0, 0; /* Black for light mode */
+  --background-start-rgb: 214, 219, 220; /* Light gray start for light mode */
+  --background-end-rgb: 255, 255, 255; /* White end for light mode */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255; /* White for dark mode */
+    --background-start-rgb: 0, 0, 0; /* Black start for dark mode */
+    --background-end-rgb: 0, 0, 0; /* Black end for dark mode */
+  }
+}
+
+/* Body Styling with Gradient Background */
+body {
+  color: rgb(var(--foreground-rgb)); /* Dynamically set text color based on mode */
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    ),
+    rgb(var(--background-start-rgb)); /* Gradient from start to end background color */
+}
+
+/* Tailwind Layer for Additional Custom Utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance; /* Enable balanced text wrapping for readability */
+  }
+  
+  /* Additional custom utility example: text shadow */
+  .text-shadow-md {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Medium text shadow */
+  }
+
+  /* Example for hover effects */
+  .hover-brightness:hover {
+    filter: brightness(1.1); /* Slight brightness increase on hover */
+  }
+}
