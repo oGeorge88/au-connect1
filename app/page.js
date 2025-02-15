@@ -1,12 +1,15 @@
 "use client"; // Add this directive to indicate a Client Component
 
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { Navbar, Nav, Container } from 'react-bootstrap'; // Import React Bootstrap components
 
 export default function Home() {
+  // State for handling the toggle effect on cards
+  const [activeCard, setActiveCard] = useState(null);
+
   useEffect(() => {
     // Import Bootstrap JS for Carousel functionality
     import('bootstrap/dist/js/bootstrap.bundle.min.js');
@@ -23,6 +26,11 @@ export default function Home() {
     })();
   }, []);
 
+  // Function to handle the mouse hover or click effect
+  const handleCardClick = (card) => {
+    setActiveCard(activeCard === card ? null : card); // Toggle active state
+  };
+
   return (
     <div className="min-vh-100 d-flex flex-column">
       {/* Navbar Section using React Bootstrap */}
@@ -38,7 +46,7 @@ export default function Home() {
                 priority
                 className="rounded-circle me-2"
               />
-              AU Connect Dashboard
+              VMES RAG Connect Dashboard
             </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -65,32 +73,52 @@ export default function Home() {
       <main className="container my-4 flex-grow-1">
         <h2 className="text-center fw-bold fs-3 mb-4">Welcome to AU Connect</h2>
         <div className="row g-4">
-          <Link href="/announcements" className="col-md-6 col-lg-3 text-decoration-none">
-            <div className="card h-100">
+          <Link href="/announcements" className="col-md-6 col-lg-3 col-12 text-decoration-none">
+            <div 
+              className={`card h-100 ${activeCard === 'announcements' ? 'shadow-lg border-danger' : 'shadow'} hover-card`}
+              onMouseEnter={() => setActiveCard('announcements')}
+              onMouseLeave={() => setActiveCard(null)}
+              onClick={() => handleCardClick('announcements')}
+            >
               <div className="card-body">
                 <h3 className="card-title text-danger">Announcements</h3>
                 <p className="card-text">Check the latest announcements and updates.</p>
               </div>
             </div>
           </Link>
-          <Link href="/contacts" className="col-md-6 col-lg-3 text-decoration-none">
-            <div className="card h-100">
+          <Link href="/contacts" className="col-md-6 col-lg-3 col-12 text-decoration-none">
+            <div 
+              className={`card h-100 ${activeCard === 'contacts' ? 'shadow-lg border-danger' : 'shadow'} hover-card`}
+              onMouseEnter={() => setActiveCard('contacts')}
+              onMouseLeave={() => setActiveCard(null)}
+              onClick={() => handleCardClick('contacts')}
+            >
               <div className="card-body">
                 <h3 className="card-title text-danger">Contact Management</h3>
                 <p className="card-text">Manage your contacts within the university.</p>
               </div>
             </div>
           </Link>
-          <Link href="/email" className="col-md-6 col-lg-3 text-decoration-none">
-            <div className="card h-100">
+          <Link href="/email" className="col-md-6 col-lg-3 col-12 text-decoration-none">
+            <div 
+              className={`card h-100 ${activeCard === 'email' ? 'shadow-lg border-danger' : 'shadow'} hover-card`}
+              onMouseEnter={() => setActiveCard('email')}
+              onMouseLeave={() => setActiveCard(null)}
+              onClick={() => handleCardClick('email')}
+            >
               <div className="card-body">
                 <h3 className="card-title text-danger">Email Communication</h3>
                 <p className="card-text">Send and receive emails directly through the platform.</p>
               </div>
             </div>
           </Link>
-          <Link href="/call" className="col-md-6 col-lg-3 text-decoration-none">
-            <div className="card h-100">
+          <Link href="/call" className="col-md-6 col-lg-3 col-12 text-decoration-none">
+            <div 
+              className={`card h-100 ${activeCard === 'call' ? 'shadow-lg border-danger' : 'shadow'} hover-card`}
+              onMouseEnter={() => setActiveCard('call')}
+              onMouseLeave={() => setActiveCard(null)}
+              onClick={() => handleCardClick('call')}
+            >
               <div className="card-body">
                 <h3 className="card-title text-danger">Contact Admin</h3>
                 <p className="card-text">Make direct contact to the school Admin office for Assistance.</p>
@@ -100,7 +128,7 @@ export default function Home() {
         </div>
 
         {/* Carousel Section for Recent Activities and Announcements */}
-        <div id="announcementCarousel" className="carousel slide mt-5" data-bs-ride="carousel">
+        <div id="announcementCarousel" className="carousel slide mt-5" data-bs-ride="carousel" data-bs-pause="hover">
           <div className="carousel-inner rounded-3 shadow-lg">
             <div className="carousel-item active">
               <div className="p-4">
@@ -110,6 +138,7 @@ export default function Home() {
                   className="d-block w-100 rounded"
                   width={800}
                   height={400}
+                  loading="lazy" // Lazy load the image
                 />
                 <div className="carousel-caption d-none d-md-block">
                   <h5>Assumption University Thailand</h5>
@@ -125,6 +154,7 @@ export default function Home() {
                   className="d-block w-100 rounded"
                   width={800}
                   height={400}
+                  loading="lazy"
                 />
                 <div className="carousel-caption d-none d-md-block">
                   <h5>Graduation Ceremony</h5>
@@ -140,6 +170,7 @@ export default function Home() {
                   className="d-block w-100 rounded"
                   width={800}
                   height={400}
+                  loading="lazy"
                 />
                 <div className="carousel-caption d-none d-md-block">
                   <h5>Announcement 3</h5>
@@ -147,7 +178,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            {/* New Carousel Item for YouTube Video */}
             <div className="carousel-item">
               <div className="p-4">
                 <div className="embed-responsive embed-responsive-16by9">
@@ -170,11 +200,11 @@ export default function Home() {
             </div>
           </div>
           {/* Carousel Controls */}
-          <button className="carousel-control-prev" type="button" data-bs-target="#announcementCarousel" data-bs-slide="prev">
+          <button className="carousel-control-prev" type="button" data-bs-target="#announcementCarousel" data-bs-slide="prev" aria-label="Previous slide">
             <span className="carousel-control-prev-icon" aria-hidden="true"></span>
             <span className="visually-hidden">Previous</span>
           </button>
-          <button className="carousel-control-next" type="button" data-bs-target="#announcementCarousel" data-bs-slide="next">
+          <button className="carousel-control-next" type="button" data-bs-target="#announcementCarousel" data-bs-slide="next" aria-label="Next slide">
             <span className="carousel-control-next-icon" aria-hidden="true"></span>
             <span className="visually-hidden">Next</span>
           </button>
@@ -183,10 +213,24 @@ export default function Home() {
 
       {/* Footer Section */}
       <footer className="bg-danger text-white py-3 text-center">
-        © {new Date().getFullYear()} Assumption University - All Rights Reserved
+        <p>© {new Date().getFullYear()} Assumption University - All Rights Reserved</p>
       </footer>
+
+      <style jsx>{`
+        .hover-card {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-card:hover {
+          transform: scale(1.05);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hover-card:active {
+          transform: scale(1);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+      `}</style>
     </div>
   );
 }
-
-

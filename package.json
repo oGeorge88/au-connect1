@@ -12,6 +12,7 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
     "express": "^4.21.0",
+    "framer-motion": "^12.4.3",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
     "mongoose": "^8.6.3",
